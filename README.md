@@ -15,10 +15,6 @@ Please note that this code was written for Terraform 0.12.x.
 
 ## Quick start
 
-**Please note that this example will deploy real resources into your AWS account. We have made every effort to ensure
-all the resources qualify for the [AWS Free Tier](https://aws.amazon.com/free/), but we are not responsible for any
-charges you may incur.**
-
 Configure your [AWS access keys](http://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys) as
 environment variables:
 
@@ -26,9 +22,15 @@ environment variables:
 export AWS_ACCESS_KEY_ID=(your access key id)
 export AWS_SECRET_ACCESS_KEY=(your secret access key)
 ```
-Build the [Amazon Machine Image](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) using Packer
+Build the [Amazon Machine Image](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/AMIs.html) using [Packer](https://www.packer.io/)
 ```
 packer build webserver.json
+.
+.
+.
+==> Builds finished. The artifacts of successful builds are:
+--> amazon-ebs: AMIs were created:
+us-east-2: ami-01bd654d746a97ad2
 ```
 
 Deploy the code:
@@ -36,6 +38,12 @@ Deploy the code:
 ```
 terraform init
 terraform apply
+
+<<Enter the image id given by Packer>>
+var.ami_id
+  Image ID
+
+  Enter a value: ami-01bd654d746a97ad2
 ```
 
 When the `apply` command completes, it will output the DNS name of the load balancer. To test the load balancer:
