@@ -1,0 +1,19 @@
+{
+	"builders": [{
+		"ami_name": "packer-prueba",
+		"instance_type": "t2.micro",
+		"region": "us-east-2",
+		"type": "amazon-ebs",
+		"source_ami": "ami-0c64dd618a49aeee8",
+		"ssh_username": "ec2-user"
+	}],
+	"provisioners": [{
+		"type": "shell",
+		"inline": [
+			"sudo yum update -y",
+			"sudo yum install -y httpd24",
+			"sudo sed -i -e 's/Listen 80/Listen 8080/g' /etc/httpd/conf/httpd.conf",
+			"sudo chkconfig httpd on"
+		]
+	}]
+}
